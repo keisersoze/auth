@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
+    /*
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
@@ -31,6 +32,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(ResourceServerSecurityConfigurer config) {
         config.tokenServices(tokenServices());
     }
+    */
  
     @Bean
     public TokenStore tokenStore() {
