@@ -11,4 +11,9 @@ public class HelloWildFlyController {
     public String sayHello(){
         return ("Hi Kennedy");
     }
+
+    @RequestMapping("prova")
+    public String prova(){
+        return ("...");
+    }
 }
