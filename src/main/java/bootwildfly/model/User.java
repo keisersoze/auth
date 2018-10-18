@@ -1,22 +1,18 @@
 package bootwildfly.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
-@Entity
+@Document(collection = "domain")
 public class User implements UserDetails{
 
     @Id
-    @NotNull
-    @com.fasterxml.jackson.annotation.JsonProperty("username")
     private String username;
 
-    @NotNull
-    @com.fasterxml.jackson.annotation.JsonProperty("password")
     private String password;
 
 
@@ -41,12 +37,10 @@ public class User implements UserDetails{
         return null;
     }
 
-    @com.fasterxml.jackson.annotation.JsonIgnore
     public String getPassword() {
         return password;
     }
 
-    @com.fasterxml.jackson.annotation.JsonIgnore
     public String getUsername() {
         return username;
     }
@@ -72,12 +66,10 @@ public class User implements UserDetails{
     }
 
 
-    @com.fasterxml.jackson.annotation.JsonIgnore
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @com.fasterxml.jackson.annotation.JsonIgnore
     public void setPassword(String password) {
         this.password = password;
     }
