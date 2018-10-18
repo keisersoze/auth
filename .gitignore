@@ -1,5 +1,5 @@
 file.txt
-*/target/**
+target/
 
 # Created by https://www.gitignore.io/api/java
 
