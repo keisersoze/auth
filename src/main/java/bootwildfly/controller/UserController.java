@@ -18,7 +18,6 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Qualifier("myUserService")
     @Autowired
     private MyUserService userService;
 

@@ -1,5 +1,6 @@
 package bootwildfly.config;
 
+import bootwildfly.service.MyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -23,11 +24,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MyUserService myUserService;
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll();
+    }
+
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth    .userDetailsService(myUserService)
+                .passwordEncoder(passwordEncoder);
     }
 
 
