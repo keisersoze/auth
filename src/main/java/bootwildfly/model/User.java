@@ -2,69 +2,40 @@ package bootwildfly.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
-@Document(collection = "domain")
-public class User implements UserDetails{
+@Document(collection = "User")
+public class User{
 
     @Id
     private String username;
 
     private String password;
 
+    private List<String> authorities;
+
 
     public User() {
-
+        authorities = new ArrayList<>();
     }
 
-    public User(UserDetails userDetails){
-        this();
+    public User(User userDetails){
         this.setUsername(userDetails.getUsername());
         this.setPassword(userDetails.getPassword());
+        this.setAuthorities(userDetails.getAuthorities());
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, List<String> authorities) {
         this.username = username;
         this.password = password;
+        this.authorities = authorities;
     }
 
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
-
 
     public void setUsername(String username) {
         this.username = username;
@@ -74,5 +45,15 @@ public class User implements UserDetails{
         this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public List<String> getAuthorities() {
+        return authorities;
+    }
 }

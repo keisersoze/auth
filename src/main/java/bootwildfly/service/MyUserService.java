@@ -1,8 +1,10 @@
 package bootwildfly.service;
 
 
-import bootwildfly.DAO.UserRepository;
+import bootwildfly.repository.UserRepository;
+import bootwildfly.exception.ResourceNotFoundException;
 import bootwildfly.model.User;
+import bootwildfly.model.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,18 +22,22 @@ public class MyUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserDetails user = userRepository.findByUsername(username);
-        return user;
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new ResourceNotFoundException(username);
+        }
+        return new UserPrincipal(user);
     }
 
     public List<UserDetails> findAll() {
         List<UserDetails> users = new ArrayList<>();
-        userRepository.findAll().forEach(user -> users.add(user));
+        userRepository
+                .findAll()
+                .forEach(user -> users.add(new UserPrincipal(user)));
         return users;
     }
 
-    public void put(UserDetails userDetails){
-        User user = new User(userDetails);
+    public void put(User user){
         userRepository.save(user);
     }
 

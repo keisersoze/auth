@@ -23,10 +23,12 @@ public class UserController {
     private MyUserService userService;
 
 
-    @PutMapping("/user/{username}/{password}")
-    public void putClient(@PathVariable(value="username") String username,@PathVariable(value="password") String password){
-        String encPassword = passwordEncoder.encode(password);
-        userService.put(new User(username,encPassword));
+    @PutMapping("/user/{username}")
+    public void putClient(@PathVariable(value="username") String username,@RequestBody User user){
+        String encPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encPassword);
+        user.setUsername(username);
+        userService.put(user);
     }
 
     @GetMapping("/user/{username}")

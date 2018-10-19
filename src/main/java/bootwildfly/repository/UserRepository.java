@@ -1,4 +1,4 @@
-package bootwildfly.DAO;
+package bootwildfly.repository;
 
 
 import bootwildfly.model.User;
