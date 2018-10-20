@@ -1,40 +1,31 @@
 package bootwildfly.service;
 
-
-import bootwildfly.repository.UserRepository;
 import bootwildfly.exception.ResourceNotFoundException;
 import bootwildfly.model.User;
-import bootwildfly.model.UserPrincipal;
+import bootwildfly.model.principal.UserPrincipal;
+import bootwildfly.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Service
-public class MyUserService implements UserDetailsService {
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) {
+
+    public User loadUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new ResourceNotFoundException(username);
         }
-        return new UserPrincipal(user);
+        return user;
     }
 
-    public List<UserDetails> findAll() {
-        List<UserDetails> users = new ArrayList<>();
-        userRepository
-                .findAll()
-                .forEach(user -> users.add(new UserPrincipal(user)));
-        return users;
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     public void put(User user){

@@ -3,23 +3,35 @@ package bootwildfly.controller;
 
 
 import bootwildfly.model.User;
-import bootwildfly.service.MyUserService;
+import bootwildfly.service.UserService;
+import bootwildfly.service.principal.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Configuration
 @RestController
 public class UserController {
+
+    /* Start - Definition of Spring Beans */
+    @Bean
+    public UserService userService() {
+        return new UserService();
+    }
+
+    /* End - Definition of Spring Beans */
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private MyUserService userService;
+    private UserService userService;
 
 
     @PutMapping("/user/{username}")
@@ -31,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/user/{username}")
-    public UserDetails getClient(@PathVariable(value="username") String username){
+    public User getClient(@PathVariable(value="username") String username){
         return userService.loadUserByUsername(username);
     }
 
@@ -41,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public List<UserDetails> findAllClients(){
+    public List<User> findAllClients(){
         return userService.findAll();
     }
 }

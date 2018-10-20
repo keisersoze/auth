@@ -3,7 +3,6 @@ package bootwildfly.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "User")
@@ -18,13 +17,6 @@ public class User{
 
 
     public User() {
-        authorities = new ArrayList<>();
-    }
-
-    public User(User userDetails){
-        this.setUsername(userDetails.getUsername());
-        this.setPassword(userDetails.getPassword());
-        this.setAuthorities(userDetails.getAuthorities());
     }
 
     public User(String username, String password, List<String> authorities) {
