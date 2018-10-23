@@ -17,7 +17,7 @@ public class ClientApplicationPrincipal implements ClientDetails {
 
     @Override
     public String getClientId() {
-        return clientApplication.getClientId();
+        return clientApplication.getClientApplicationId();
     }
 
     @Override

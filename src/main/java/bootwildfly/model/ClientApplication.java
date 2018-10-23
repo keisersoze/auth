@@ -5,11 +5,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "ClientApplication")
+@Document(collection = "Application")
 public class ClientApplication {
 
     @Id
-    private String clientId;
+    private String clientApplicationId;
     private String clientSecret;
     private List<String> authorities;
 
@@ -17,8 +17,8 @@ public class ClientApplication {
 
     }
 
-    public ClientApplication(String clientId, String clientSecret, List<String> authorities) {
-        this.clientId = clientId;
+    public ClientApplication(String clientApplicationId, String clientSecret, List<String> authorities) {
+        this.clientApplicationId = clientApplicationId;
         this.clientSecret = clientSecret;
         this.authorities = authorities;
     }
@@ -27,16 +27,16 @@ public class ClientApplication {
         return authorities;
     }
 
-    public String getClientId() {
-        return clientId;
+    public String getClientApplicationId() {
+        return clientApplicationId;
     }
 
     public String getClientSecret() {
         return clientSecret;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setClientApplicationId(String clientApplicationId) {
+        this.clientApplicationId = clientApplicationId;
     }
 
     public void setClientSecret(String clientSecret) {

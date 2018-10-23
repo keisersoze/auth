@@ -13,6 +13,14 @@ public class ClientApplicationService {
     @Autowired
     private ClientRepository clientRepository;
 
+    public ClientApplication loadByClientApplicationId(String id){
+        if (clientRepository.existsByClientApplicationId(id)) {
+            return clientRepository.findByClientApplicationId(id);
+        }else {
+            throw new ResourceNotFoundException(id);
+        }
+    }
+
     public List<ClientApplication> findAll(){
         List<ClientApplication> clients = new ArrayList<>();
         clientRepository.findAll().forEach(clientApplication -> clients.add(clientApplication));
@@ -24,8 +32,8 @@ public class ClientApplicationService {
     }
 
     public void deleteByClientID(String clientId){
-        if (clientRepository.existsByClientId(clientId)) {
-            clientRepository.deleteByClientId(clientId);
+        if (clientRepository.existsByClientApplicationId(clientId)) {
+            clientRepository.deleteByClientApplicationId(clientId);
         }else {
             throw new ResourceNotFoundException(clientId);
         }

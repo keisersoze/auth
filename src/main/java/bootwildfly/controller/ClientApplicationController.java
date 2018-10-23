@@ -1,9 +1,55 @@
 package bootwildfly.controller;
 
+import bootwildfly.model.ClientApplication;
+import bootwildfly.service.ClientApplicationService;
+import bootwildfly.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Configuration
 @RestController
 public class ClientApplicationController {
+
+    /* Start - Definition of Spring Beans */
+    @Bean
+    public ClientApplicationService clientApplicationService() {
+        return new ClientApplicationService();
+    }
+
+    /* End - Definition of Spring Beans */
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ClientApplicationService clientApplicationService;
+
+
+    @PutMapping("/application/{application_id}")
+    public void putClient(@PathVariable(value="application_id") String id,@RequestBody ClientApplication clientApplication){
+        String encPassword = passwordEncoder.encode(clientApplication.getClientSecret());
+        clientApplication.setClientSecret(encPassword);
+        clientApplication.setClientApplicationId(id);
+        clientApplicationService.put(clientApplication);
+    }
+
+    @GetMapping("/application/{application_id}")
+    public ClientApplication getClient(@PathVariable(value="application_id") String id){
+        return clientApplicationService.loadByClientApplicationId(id);
+    }
+
+    @DeleteMapping("/application/{application_id}")
+    public void deleteClient(@PathVariable(value="application_id") String id){
+        clientApplicationService.deleteByClientID(id);
+    }
+
+    @GetMapping("/application")
+    public List<ClientApplication> findAllClients(){
+        return clientApplicationService.findAll();
+    }
 }

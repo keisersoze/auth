@@ -6,8 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 
 
 public interface ClientRepository extends MongoRepository<ClientApplication, Long> {
-    ClientApplication findByClientId(String clientId);
-    void deleteByClientId(String clientId);
-    boolean existsByClientId(String clientId);
+    ClientApplication findByClientApplicationId(String clientId);
+    void deleteByClientApplicationId(String clientId);
+    boolean existsByClientApplicationId(String clientId);
 
 }
