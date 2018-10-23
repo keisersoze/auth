@@ -28,7 +28,7 @@ public class UserController {
     /* End - Definition of Spring Beans */
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;
