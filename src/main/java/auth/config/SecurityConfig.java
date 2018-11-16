@@ -19,6 +19,7 @@ import auth.service.principal.MyUserDetailsService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /* Start - Definition of Spring Beans */
+	
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
