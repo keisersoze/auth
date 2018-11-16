@@ -31,8 +31,8 @@ public class UserController {
 
     /* End - Definition of Spring Beans */
 
-    /*@Autowired
-    private PasswordEncoder passwordEncoder;*/
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;
@@ -40,8 +40,8 @@ public class UserController {
 
     @PutMapping("/user/{username}")
     public void putClient(@PathVariable(value="username") String username,@RequestBody User user){
-        //String encPassword = passwordEncoder.encode(user.getPassword());
-        //user.setPassword(encPassword);
+        String encPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encPassword);
         user.setUsername(username);
         userService.put(user);
     }

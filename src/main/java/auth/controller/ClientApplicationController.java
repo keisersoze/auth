@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import auth.model.ClientApplication;
 import auth.service.ClientApplicationService;
@@ -29,8 +31,8 @@ public class ClientApplicationController {
 
     /* End - Definition of Spring Beans */
 
-    /*@Autowired
-    private PasswordEncoder passwordEncoder;*/
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ClientApplicationService clientApplicationService;
@@ -38,16 +40,16 @@ public class ClientApplicationController {
 
     @PutMapping("/application/{application_id}")
     public void putClient(@PathVariable(value="application_id") String id,@RequestBody ClientApplication clientApplication){
-        //String encPassword = passwordEncoder.encode(clientApplication.getClientSecret());
-        //clientApplication.setClientSecret(encPassword);
+        String encPassword = passwordEncoder.encode(clientApplication.getClientSecret());
+        clientApplication.setClientSecret(encPassword);
         clientApplication.setClientApplicationId(id);
         clientApplicationService.add(clientApplication);
     }
     
     @PatchMapping("/application/{application_id}")
     public void patchClient(@PathVariable(value="application_id") String id,@RequestBody ClientApplication clientApplication){
-    	//String encPassword = passwordEncoder.encode(clientApplication.getClientSecret());
-        //clientApplication.setClientSecret(encPassword);
+    	String encPassword = passwordEncoder.encode(clientApplication.getClientSecret());
+        clientApplication.setClientSecret(encPassword);
         clientApplication.setClientApplicationId(id);
         clientApplicationService.add(clientApplication);
     }
