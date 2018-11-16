@@ -3,6 +3,7 @@ package auth.service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import auth.exception.ResourceNotFoundException;
+import auth.exception.UsernameNotValid;
 import auth.model.ClientApplication;
 import auth.repository.ClientRepository;
 
@@ -28,8 +29,11 @@ public class ClientApplicationService {
         return clients;
     }
 
-    public void put(ClientApplication clientApplication){
-        clientRepository.save(clientApplication);
+    public void add(ClientApplication clientApplication){
+    	if (!clientRepository.existsByClientApplicationId(clientApplication.getClientApplicationId()))
+    		clientRepository.insert(clientApplication);
+    	else
+    		throw new UsernameNotValid(clientApplication.getClientApplicationId());
     }
 
     public void deleteByClientID(String clientId){

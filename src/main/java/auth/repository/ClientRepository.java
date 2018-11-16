@@ -9,5 +9,5 @@ public interface ClientRepository extends MongoRepository<ClientApplication, Lon
     ClientApplication findByClientApplicationId(String clientId);
     void deleteByClientApplicationId(String clientId);
     boolean existsByClientApplicationId(String clientId);
-
+    
 }

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +41,15 @@ public class ClientApplicationController {
         String encPassword = passwordEncoder.encode(clientApplication.getClientSecret());
         clientApplication.setClientSecret(encPassword);
         clientApplication.setClientApplicationId(id);
-        clientApplicationService.put(clientApplication);
+        clientApplicationService.add(clientApplication);
+    }
+    
+    @PatchMapping("/application/{application_id}")
+    public void patchClient(@PathVariable(value="application_id") String id,@RequestBody ClientApplication clientApplication){
+    	String encPassword = passwordEncoder.encode(clientApplication.getClientSecret());
+        clientApplication.setClientSecret(encPassword);
+        clientApplication.setClientApplicationId(id);
+        clientApplicationService.add(clientApplication);
     }
 
     @GetMapping("/application/{application_id}")
@@ -57,4 +66,5 @@ public class ClientApplicationController {
     public List<ClientApplication> findAllClients(){
         return clientApplicationService.findAll();
     }
+    
 }
