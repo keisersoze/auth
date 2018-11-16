@@ -77,7 +77,7 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer
-                .checkTokenAccess("permitAll())")
+                .checkTokenAccess("permitAll()")
                 .tokenKeyAccess("denyAll()");
     }
 
