@@ -25,12 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // provides the default AuthenticationManager as a Bean
         return super.authenticationManagerBean();
     }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
+    
     /* End - Definition of Spring Beans */
 
     @Autowired
