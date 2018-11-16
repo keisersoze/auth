@@ -1,14 +1,15 @@
-package bootwildfly.service.principal;
+package auth.service.principal;
 
 
-import bootwildfly.exception.ResourceNotFoundException;
-import bootwildfly.model.User;
-import bootwildfly.model.principal.UserPrincipal;
-import bootwildfly.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+
+import auth.exception.ResourceNotFoundException;
+import auth.model.User;
+import auth.model.principal.UserPrincipal;
+import auth.repository.UserRepository;
 
 
 @Service

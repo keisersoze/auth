@@ -1,4 +1,4 @@
-package bootwildfly.model.principal;
+package auth.model.principal;
 
 import org.springframework.security.core.GrantedAuthority;
 

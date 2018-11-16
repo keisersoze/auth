@@ -1,8 +1,9 @@
-package bootwildfly.model.principal;
+package auth.model.principal;
 
-import bootwildfly.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import auth.model.User;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package bootwildfly.exception;
+package auth.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;

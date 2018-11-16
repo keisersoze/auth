@@ -1,8 +1,9 @@
-package bootwildfly.model.principal;
+package auth.model.principal;
 
-import bootwildfly.model.ClientApplication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
+
+import auth.model.ClientApplication;
 
 import java.util.*;
 

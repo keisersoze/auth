@@ -1,14 +1,12 @@
-package bootwildfly.service;
+package auth.service;
 
-import bootwildfly.exception.ResourceNotFoundException;
-import bootwildfly.model.User;
-import bootwildfly.model.principal.UserPrincipal;
-import bootwildfly.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import auth.exception.ResourceNotFoundException;
+import auth.model.User;
+import auth.repository.UserRepository;
 
 public class UserService {
 

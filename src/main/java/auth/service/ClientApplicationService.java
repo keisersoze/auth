@@ -1,9 +1,10 @@
-package bootwildfly.service;
+package auth.service;
 
-import bootwildfly.exception.ResourceNotFoundException;
-import bootwildfly.model.ClientApplication;
-import bootwildfly.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import auth.exception.ResourceNotFoundException;
+import auth.model.ClientApplication;
+import auth.repository.ClientRepository;
 
 import java.util.ArrayList;
 import java.util.List;

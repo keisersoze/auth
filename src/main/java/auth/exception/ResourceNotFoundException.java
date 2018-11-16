@@ -1,4 +1,4 @@
-package bootwildfly.exception;
+package auth.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     private String resourceUri;

@@ -1,8 +1,8 @@
-package bootwildfly.repository;
+package auth.repository;
 
-import bootwildfly.model.ClientApplication;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.repository.CrudRepository;
+
+import auth.model.ClientApplication;
 
 
 public interface ClientRepository extends MongoRepository<ClientApplication, Long> {

@@ -1,14 +1,15 @@
-package bootwildfly.service.principal;
+package auth.service.principal;
 
 
-import bootwildfly.exception.ResourceNotFoundException;
-import bootwildfly.model.ClientApplication;
-import bootwildfly.model.principal.ClientApplicationPrincipal;
-import bootwildfly.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Service;
+
+import auth.exception.ResourceNotFoundException;
+import auth.model.ClientApplication;
+import auth.model.principal.ClientApplicationPrincipal;
+import auth.repository.ClientRepository;
 
 @Service
 public class MyClientDetailsService implements ClientDetailsService {
