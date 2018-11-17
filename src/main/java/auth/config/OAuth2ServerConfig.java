@@ -59,9 +59,6 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private JwtAccessTokenConverter accessTokenConverter;
 
-    @Autowired
-    private DefaultTokenServices defaultTokenServices;
-
 
 
 

@@ -1,9 +1,9 @@
 package auth.exception;
 
-public class UsernameNotValid extends RuntimeException {
+public class ClientIDNotValid extends RuntimeException {
 	private String resourceUri;
 
-    public UsernameNotValid(String resourceUri) {
+    public ClientIDNotValid(String resourceUri) {
         this.resourceUri = resourceUri;
     }
 
