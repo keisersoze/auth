@@ -1,6 +1,7 @@
 package auth.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /* Start - Definition of Spring Beans */
 	
     @Bean
+    @Qualifier("bcrypt")
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -35,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /* End - Definition of Spring Beans */
 
     @Autowired
+    @Qualifier("bcrypt")
     private PasswordEncoder passwordEncoder;
 
     @Autowired
