@@ -18,16 +18,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import auth.model.Application;
-import auth.service.ApplicationService;
+import auth.service.ApplicationServiceImpl;
 
 @Configuration
 @RestController
-public class ClientApplicationController {
+public class ApplicationController {
 
     /* Start - Definition of Spring Beans */
     @Bean
-    public ApplicationService clientApplicationService() {
-        return new ApplicationService();
+    public ApplicationServiceImpl clientApplicationService() {
+        return new ApplicationServiceImpl();
     }
 
     /* End - Definition of Spring Beans */
@@ -36,40 +36,40 @@ public class ClientApplicationController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private ApplicationService applicationService;
+    private ApplicationServiceImpl applicationService;
 
 
     @PutMapping("/application/{application_id}")
     public void putClient(@PathVariable(value="application_id") String id,@RequestBody Application clientApplication){
-        String encPassword = passwordEncoder.encode(clientApplication.getClientSecret());
-        clientApplication.setClientSecret(encPassword);
-        clientApplication.setClientApplicationId(id);
-        applicationService.post(clientApplication);
+        String encPassword = passwordEncoder.encode(clientApplication.getSecret());
+        clientApplication.setSecret(encPassword);
+        clientApplication.setApplicationId(id);
+        applicationService.insert(clientApplication);
     }
     
     @PostMapping("/application")
     public void postClient(@RequestBody Application clientApplication){
-        String encPassword = passwordEncoder.encode(clientApplication.getClientSecret());
-        clientApplication.setClientSecret(encPassword);
-        applicationService.post(clientApplication);
+        String encPassword = passwordEncoder.encode(clientApplication.getSecret());
+        clientApplication.setSecret(encPassword);
+        applicationService.insert(clientApplication);
     }
     
     @PatchMapping("/application/{application_id}")
     public void patchClient(@PathVariable(value="application_id") String id,@RequestBody Application clientApplication){
-    	String encPassword = passwordEncoder.encode(clientApplication.getClientSecret());
-        clientApplication.setClientSecret(encPassword);
-        clientApplication.setClientApplicationId(id);
-        applicationService.patch(clientApplication);
+    	String encPassword = passwordEncoder.encode(clientApplication.getSecret());
+        clientApplication.setSecret(encPassword);
+        clientApplication.setApplicationId(id);
+        applicationService.update(clientApplication);
     }
 
     @GetMapping("/application/{application_id}")
     public Application getClient(@PathVariable(value="application_id") String id){
-        return applicationService.loadByClientApplicationId(id);
+        return applicationService.find(id);
     }
 
     @DeleteMapping("/application/{application_id}")
     public void deleteClient(@PathVariable(value="application_id") String id){
-        applicationService.deleteByClientID(id);
+        applicationService.delete(id);
     }
 
     @GetMapping("/application")

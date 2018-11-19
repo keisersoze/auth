@@ -18,7 +18,7 @@ public class ClientApplicationPrincipal implements ClientDetails {
 
     @Override
     public String getClientId() {
-        return clientApplication.getClientApplicationId();
+        return clientApplication.getApplicationId();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ClientApplicationPrincipal implements ClientDetails {
 
     @Override
     public String getClientSecret() {
-        return clientApplication.getClientSecret();
+        return clientApplication.getSecret();
     }
 
     @Override

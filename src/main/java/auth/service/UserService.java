@@ -2,37 +2,14 @@ package auth.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import auth.exception.ResourceNotFoundException;
 import auth.model.User;
-import auth.repository.UserRepository;
 
-public class UserService {
+public interface UserService {
+	User loadUserByUsername(String username);
 
-    @Autowired
-    private UserRepository userRepository;
+    List<User> findAll();
 
+    void put(User user);
 
-    public User loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new ResourceNotFoundException(username);
-        }
-        return user;
-    }
-
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
-
-    public void put(User user){
-        userRepository.save(user);
-    }
-
-    public void deleteByUsername(String username){
-        if (userRepository.existsByUsername(username)) {
-            userRepository.deleteByUsername(username);
-        }
-    }
+    void deleteByUsername(String username);
 }

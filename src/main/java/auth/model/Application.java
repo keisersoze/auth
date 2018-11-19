@@ -9,8 +9,8 @@ import java.util.List;
 public class Application {
 
     @Id
-    private String clientApplicationId;
-    private String clientSecret;
+    private String applicationId;
+    private String secret;
     private List<String> authorities;
 
     public Application() {
@@ -18,8 +18,8 @@ public class Application {
     }
 
     public Application(String clientApplicationId, String clientSecret, List<String> authorities) {
-        this.clientApplicationId = clientApplicationId;
-        this.clientSecret = clientSecret;
+        this.applicationId = clientApplicationId;
+        this.secret = clientSecret;
         this.authorities = authorities;
     }
 
@@ -27,20 +27,20 @@ public class Application {
         return authorities;
     }
 
-    public String getClientApplicationId() {
-        return clientApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public String getClientSecret() {
-        return clientSecret;
+    public String getSecret() {
+        return secret;
     }
 
-    public void setClientApplicationId(String clientApplicationId) {
-        this.clientApplicationId = clientApplicationId;
+    public void setApplicationId(String clientApplicationId) {
+        this.applicationId = clientApplicationId;
     }
 
-    public void setClientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
+    public void setSecret(String clientSecret) {
+        this.secret = clientSecret;
     }
 
     public void setAuthorities(List<String> authorities) {

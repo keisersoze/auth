@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import auth.model.User;
-import auth.service.UserService;
+import auth.service.UserServiceImpl;
 
 @Configuration
 @RestController
@@ -25,8 +25,8 @@ public class UserController {
 
     /* Start - Definition of Spring Beans */
     @Bean
-    public UserService userService() {
-        return new UserService();
+    public UserServiceImpl userService() {
+        return new UserServiceImpl();
     }
 
     /* End - Definition of Spring Beans */
@@ -35,7 +35,7 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
 
     @PutMapping("/user/{username}")
