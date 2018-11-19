@@ -6,18 +6,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document(collection = "Application")
-public class ClientApplication {
+public class Application {
 
     @Id
     private String clientApplicationId;
     private String clientSecret;
     private List<String> authorities;
 
-    public ClientApplication() {
+    public Application() {
 
     }
 
-    public ClientApplication(String clientApplicationId, String clientSecret, List<String> authorities) {
+    public Application(String clientApplicationId, String clientSecret, List<String> authorities) {
         this.clientApplicationId = clientApplicationId;
         this.clientSecret = clientSecret;
         this.authorities = authorities;

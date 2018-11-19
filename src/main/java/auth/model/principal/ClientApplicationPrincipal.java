@@ -3,16 +3,16 @@ package auth.model.principal;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
-import auth.model.ClientApplication;
+import auth.model.Application;
 
 import java.util.*;
 
 
 public class ClientApplicationPrincipal implements ClientDetails {
-    private ClientApplication clientApplication;
+    private Application clientApplication;
 
 
-    public ClientApplicationPrincipal(ClientApplication clientApplication) {
+    public ClientApplicationPrincipal(Application clientApplication) {
         this.clientApplication = clientApplication;
     }
 

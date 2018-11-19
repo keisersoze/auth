@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import auth.service.principal.MyClientDetailsService;
+import auth.service.MyApplicationDetailsService;
 
 @Configuration
 @EnableAuthorizationServer
@@ -54,7 +54,7 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     private JwtTokenStore tokenStore;
 
     @Autowired
-    private MyClientDetailsService clientDetailsService;
+    private MyApplicationDetailsService clientDetailsService;
 
     @Autowired
     private JwtAccessTokenConverter accessTokenConverter;

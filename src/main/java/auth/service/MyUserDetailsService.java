@@ -1,4 +1,4 @@
-package auth.service.principal;
+package auth.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

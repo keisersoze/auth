@@ -1,22 +1,21 @@
 package auth.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import auth.exception.ResourceNotFoundException;
 import auth.exception.ClientIDNotValid;
-import auth.model.ClientApplication;
+import auth.model.Application;
 import auth.repository.ClientRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientApplicationService {
+public class ApplicationService {
 
     @Autowired
     private ClientRepository clientRepository;
 
-    public ClientApplication loadByClientApplicationId(String id){
+    public Application loadByClientApplicationId(String id){
         if (clientRepository.existsByClientApplicationId(id)) {
             return clientRepository.findByClientApplicationId(id);
         }else {
@@ -24,20 +23,20 @@ public class ClientApplicationService {
         }
     }
 
-    public List<ClientApplication> findAll(){
-        List<ClientApplication> clients = new ArrayList<>();
+    public List<Application> findAll(){
+        List<Application> clients = new ArrayList<>();
         clientRepository.findAll().forEach(clientApplication -> clients.add(clientApplication));
         return clients;
     }
 
-    public void post(ClientApplication clientApplication){
+    public void post(Application clientApplication){
     	if (!clientRepository.existsByClientApplicationId(clientApplication.getClientApplicationId()))
     		clientRepository.insert(clientApplication);
     	else
     		throw new ClientIDNotValid(clientApplication.getClientApplicationId());
     }
     
-    public void patch(ClientApplication clientApplication){
+    public void patch(Application clientApplication){
     	if (clientRepository.existsByClientApplicationId(clientApplication.getClientApplicationId()))
     		clientRepository.save(clientApplication);
     	else
