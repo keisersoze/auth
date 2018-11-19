@@ -2,6 +2,8 @@ package auth.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +42,7 @@ public class ApplicationController {
 
 
     @PutMapping("/application/{application_id}")
-    public void putClient(@PathVariable(value="application_id") String id,@RequestBody Application clientApplication){
+    public void putClient(@PathVariable(value="application_id") String id,@RequestBody @Valid Application clientApplication){
         String encPassword = passwordEncoder.encode(clientApplication.getSecret());
         clientApplication.setSecret(encPassword);
         clientApplication.setApplicationId(id);
@@ -48,14 +50,14 @@ public class ApplicationController {
     }
     
     @PostMapping("/application")
-    public void postClient(@RequestBody Application clientApplication){
+    public void postClient(@RequestBody @Valid Application clientApplication){
         String encPassword = passwordEncoder.encode(clientApplication.getSecret());
         clientApplication.setSecret(encPassword);
         applicationService.insert(clientApplication);
     }
     
     @PatchMapping("/application/{application_id}")
-    public void patchClient(@PathVariable(value="application_id") String id,@RequestBody Application clientApplication){
+    public void patchClient(@PathVariable(value="application_id") String id,@RequestBody @Valid Application clientApplication){
     	String encPassword = passwordEncoder.encode(clientApplication.getSecret());
         clientApplication.setSecret(encPassword);
         clientApplication.setApplicationId(id);

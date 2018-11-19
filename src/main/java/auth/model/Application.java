@@ -5,12 +5,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Document(collection = "Application")
 public class Application {
 
     @Id
+    @NotNull
+    @Size(min=2, max=30)
     private String applicationId;
+    
+    @NotNull
+    @Size(min=8)
     private String secret;
+    
     private List<String> authorities;
 
     public Application() {
