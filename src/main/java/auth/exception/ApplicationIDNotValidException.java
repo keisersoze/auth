@@ -4,14 +4,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException {
-	
-    public ResourceNotFoundException() {
+public class ApplicationIDNotValidException extends RuntimeException {
+
+    public ApplicationIDNotValidException() {
         super();
     }
 
     @Override
     public String getMessage() {
-        return "No resource found with this URI";
+        return String.format("The application_id is not vaild");
     }
 }

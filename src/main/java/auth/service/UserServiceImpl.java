@@ -17,7 +17,7 @@ public class UserServiceImpl {
     public User loadUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new ResourceNotFoundException(username);
+            throw new ResourceNotFoundException();
         }
         return user;
     }

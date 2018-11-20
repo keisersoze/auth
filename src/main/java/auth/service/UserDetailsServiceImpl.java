@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new ResourceNotFoundException(username);
+            throw new ResourceNotFoundException();
         }
         return new UserPrincipal(user);
     }

@@ -3,7 +3,7 @@ package auth.service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import auth.exception.ResourceNotFoundException;
-import auth.exception.ClientIDNotValid;
+import auth.exception.ApplicationIDNotValidException;
 import auth.model.Application;
 import auth.repository.ApplicationRepository;
 
@@ -19,7 +19,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         if (clientRepository.existsByApplicationId(id)) {
             return clientRepository.findByApplicationId(id);
         }else {
-            throw new ResourceNotFoundException(id);
+            throw new ResourceNotFoundException();
         }
     }
 
@@ -33,21 +33,21 @@ public class ApplicationServiceImpl implements ApplicationService {
     	if (!clientRepository.existsByApplicationId(clientApplication.getApplicationId()))
     		clientRepository.insert(clientApplication);
     	else
-    		throw new ClientIDNotValid(clientApplication.getApplicationId());
+    		throw new ApplicationIDNotValidException();
     }
     
     public void update(Application clientApplication){
     	if (clientRepository.existsByApplicationId(clientApplication.getApplicationId()))
     		clientRepository.save(clientApplication);
     	else
-    		throw new ResourceNotFoundException(clientApplication.getApplicationId());
+    		throw new ResourceNotFoundException();
     }
 
     public void delete(String clientId){
         if (clientRepository.existsByApplicationId(clientId)) {
             clientRepository.deleteByApplicationId(clientId);
         }else {
-            throw new ResourceNotFoundException(clientId);
+            throw new ResourceNotFoundException();
         }
     }
     

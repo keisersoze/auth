@@ -9,51 +9,28 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Document(collection = "Application")
-public class Application {
+public class Application extends ApplicationInfo {
 
     @Id
     @NotNull
     @Size(min=3, max=30)
     private String applicationId;
-    
-    @NotNull
-    @Size(min=8)
-    private String secret;
-    
-    private List<String> authorities;
 
-    public Application() {
+    public Application(String applicationId, String secret, List<String> authorities) {
+		super(secret, authorities);
+		this.applicationId=applicationId;
+	}
 
-    }
-
-    public Application(String clientApplicationId, String clientSecret, List<String> authorities) {
-        this.applicationId = clientApplicationId;
-        this.secret = clientSecret;
-        this.authorities = authorities;
-    }
-
-    public List<String> getAuthorities() {
-        return authorities;
-    }
-
-    public String getApplicationId() {
+	public String getApplicationId() {
         return applicationId;
-    }
-
-    public String getSecret() {
-        return secret;
     }
 
     public void setApplicationId(String clientApplicationId) {
         this.applicationId = clientApplicationId;
     }
+    
+  
 
-    public void setSecret(String clientSecret) {
-        this.secret = clientSecret;
-    }
-
-    public void setAuthorities(List<String> authorities) {
-        this.authorities = authorities;
-    }
+    
 }
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import auth.exception.ResourceNotFoundException;
 import auth.model.Application;
-import auth.model.principal.ClientApplicationPrincipal;
+import auth.model.principal.ApplicationPrincipal;
 import auth.repository.ApplicationRepository;
 
 @Service
@@ -23,9 +23,9 @@ public class ApplicationDetailsServiceImpl implements ClientDetailsService {
     public ClientDetails loadClientByClientId(String clientId) {
         Application client = clientRepository.findByApplicationId(clientId);
         if (client == null) {
-            throw new ResourceNotFoundException(clientId);
+            throw new ResourceNotFoundException();
         }
-        return new ClientApplicationPrincipal(client);
+        return new ApplicationPrincipal(client);
     }
 
 }

@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document(collection = "User")
-public class User{
+public class User extends UserInfo{
 
     @Id
     private String username;

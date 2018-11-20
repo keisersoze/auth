@@ -8,11 +8,11 @@ import auth.model.Application;
 import java.util.*;
 
 
-public class ClientApplicationPrincipal implements ClientDetails {
+public class ApplicationPrincipal implements ClientDetails {
     private Application clientApplication;
 
 
-    public ClientApplicationPrincipal(Application clientApplication) {
+    public ApplicationPrincipal(Application clientApplication) {
         this.clientApplication = clientApplication;
     }
 
