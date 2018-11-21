@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -20,31 +24,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private static final int ACCESS_TOKEN_VALIDITY_SECONDS = 100;
     private static final String SIMMETRIC_KEY = "4pE8z3PBoHjnv1AhvGk+e8h2p+ShzpOnpr8cwHmMh1w=";
-
-    /* Start - Definition of Spring Beans */
-
-    @Bean
-    public JwtTokenStore tokenStore() {
-        return new JwtTokenStore(accessTokenConverter);
-    }
-
-    @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(SIMMETRIC_KEY);
-        return converter;
-    }
-
-    @Bean
-    public DefaultTokenServices tokenServices() {
-        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(tokenStore);
-        defaultTokenServices.setAccessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS);
-        defaultTokenServices.setTokenEnhancer(accessTokenConverter);
-        return defaultTokenServices;
-    }
-
-    /* End - Definition of Spring Beans */
+    
+    @Autowired
+    private JwtAccessTokenConverter accessTokenConverter;
 
     @Autowired
     private JwtTokenStore tokenStore;
@@ -56,8 +38,33 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Qualifier("ApplicationDetailsServiceImpl")
     private ClientDetailsService clientDetailsService;
 
-    @Autowired
-    private JwtAccessTokenConverter accessTokenConverter;
+    /* Start - Definition of Spring Beans */
+
+    @Bean
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey(SIMMETRIC_KEY);
+        return converter;
+    }
+    
+    @Bean
+    @DependsOn("accessTokenConverter")
+    public JwtTokenStore tokenStore() {
+        return new JwtTokenStore(accessTokenConverter);
+    }
+
+    @Bean
+    @DependsOn("tokenStore")
+    public DefaultTokenServices tokenServices() {
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setTokenStore(tokenStore);
+        defaultTokenServices.setAccessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS);
+        return defaultTokenServices;
+    }
+
+    /* End - Definition of Spring Beans */
+    
+    /* Start - Configurations */
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer configurer) {
@@ -78,4 +85,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(clientDetailsService);
     }
+    
+    /* End - Configurations */
 }
