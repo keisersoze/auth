@@ -4,11 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -21,7 +16,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
-public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private static final int ACCESS_TOKEN_VALIDITY_SECONDS = 100;
     private static final String SIMMETRIC_KEY = "4pE8z3PBoHjnv1AhvGk+e8h2p+ShzpOnpr8cwHmMh1w=";
@@ -43,8 +38,9 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Bean
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(tokenStore());
+        defaultTokenServices.setTokenStore(tokenStore);
         defaultTokenServices.setAccessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS);
+        defaultTokenServices.setTokenEnhancer(accessTokenConverter);
         return defaultTokenServices;
     }
 
@@ -52,6 +48,9 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private JwtTokenStore tokenStore;
+    
+    @Autowired
+    private DefaultTokenServices tokenServices;
 
     @Autowired
     @Qualifier("ApplicationDetailsServiceImpl")
@@ -61,9 +60,9 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     private JwtAccessTokenConverter accessTokenConverter;
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints
-                .tokenServices(tokenServices())
+    public void configure(AuthorizationServerEndpointsConfigurer configurer) {
+        configurer
+                .tokenServices(tokenServices)
                 .tokenStore(tokenStore)
                 .accessTokenConverter(accessTokenConverter);
     }
@@ -71,7 +70,7 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer
-                .checkTokenAccess("permitAll()")
+                .checkTokenAccess("denyAll()")
                 .tokenKeyAccess("denyAll()");		
     }
 

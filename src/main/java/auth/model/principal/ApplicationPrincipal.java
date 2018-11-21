@@ -48,7 +48,9 @@ public class ApplicationPrincipal implements ClientDetails {
 
     @Override
     public Set<String> getAuthorizedGrantTypes() {
-        return null;
+    	Set<String> set= new HashSet<String>();
+    	set.add("client_credentials");
+        return set;
     }
 
     @Override
