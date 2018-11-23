@@ -29,8 +29,5 @@ public class Application extends ApplicationInfo {
         this.applicationId = clientApplicationId;
     }
     
-  
-
-    
 }
 

@@ -1,13 +1,12 @@
-it uses the embedded tomcat container of SpringBoot
-As an added bonus, this repo can also be deployed directly as a docker container using the WildFly S2I builder image on OpenShift 3 with the following command:
+A SpringBoot application that provides authentication mechanisms for applications and users and a complete set of REST API to manage their identities.
 
-	oc new-app wildfly:10.0~https://github.com/gshipley/bootwildfly.git
+The application can be builded as a docker image using the JDK 1.8 S2I builder image of OpenShift 3 .
+
+Requirements:
+* a running MongoDB database
+
+Integration:
+* connection details have to be specified in .properties files
 
 
-What, you don't have OpenShift 3 yet? Fix that immediately: www.openshift.org/vm
 
-
-       Username: test
-       Password: test
-  Database Name: sampledb
- Connection URL: mongodb://test:test@mongodb/sampledb

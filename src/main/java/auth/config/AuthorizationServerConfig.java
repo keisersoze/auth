@@ -2,9 +2,11 @@ package auth.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -18,26 +20,23 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-
-    private static final int ACCESS_TOKEN_VALIDITY_SECONDS = 10;
-    private static final String SIMMETRIC_KEY = "4pE8z3PBoHjnv1AhvGk+e8h2p+ShzpOnpr8cwHmMh1w=";
+	
+	@Value("${auth.access_token_validity_seconds}")
+    private int ACCESS_TOKEN_VALIDITY_SECONDS;
     
-    @Autowired
-    private JwtAccessTokenConverter accessTokenConverter;
-
-    @Autowired
-    private JwtTokenStore tokenStore;
+    @Value("${auth.simmetric_key}")
+    private String SIMMETRIC_KEY; // at least 256 bits
+	
+	/* Start - Definition of Spring Beans */
     
-    @Autowired
-    private DefaultTokenServices tokenServices;
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
+     return new PropertySourcesPlaceholderConfigurer();
 
-    @Autowired
-    @Qualifier("ApplicationDetailsServiceImpl")
-    private ClientDetailsService clientDetailsService;
-
-    /* Start - Definition of Spring Beans */
+    }
 
     @Bean
+    @DependsOn("placeHolderConfigurer")
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey(SIMMETRIC_KEY);
@@ -62,7 +61,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /* End - Definition of Spring Beans */
     
-    /* Start - Configurations */
+    @Autowired
+    private JwtAccessTokenConverter accessTokenConverter;
+
+    @Autowired
+    private JwtTokenStore tokenStore;
+    
+    @Autowired
+    private DefaultTokenServices tokenServices;
+
+    @Autowired
+    @Qualifier("ApplicationDetailsServiceImpl")
+    private ClientDetailsService clientDetailsService;
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer configurer) {
@@ -84,5 +94,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clients.withClientDetails(clientDetailsService);
     }
     
-    /* End - Configurations */
 }
