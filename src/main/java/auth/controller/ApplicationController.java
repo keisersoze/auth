@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,14 +25,6 @@ import auth.service.ApplicationServiceImpl;
 @Configuration
 @RestController
 public class ApplicationController {
-
-    /* Start - Definition of Spring Beans */
-    @Bean
-    public ApplicationServiceImpl clientApplicationService() {
-        return new ApplicationServiceImpl();
-    }
-
-    /* End - Definition of Spring Beans */
 
     @Autowired
     @Qualifier("bcrypt")
@@ -55,7 +46,7 @@ public class ApplicationController {
     }
     
     @PatchMapping("/application/{application_id}")
-    public void patchClient(@PathVariable(value="application_id") String id,@RequestBody @Valid Application clientApplication){
+    public void patchClient(@PathVariable(value="application_id") String id,@RequestBody @Valid ApplicationInfo clientApplication){
     	String encPassword = passwordEncoder.encode(clientApplication.getSecret());
         applicationService.update(new Application(id, encPassword, clientApplication.getAuthorities()));
     }
