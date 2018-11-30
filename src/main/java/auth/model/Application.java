@@ -16,9 +16,10 @@ public class Application extends ApplicationInfo {
     @Size(min=3, max=30)
     private String applicationId;
 
-    public Application(String applicationId, String secret, List<String> authorities) {
+	public Application(@NotNull @Size(min = 3, max = 30) String applicationId,
+			@NotNull @Size(min = 8) String secret, List<String> authorities) {
 		super(secret, authorities);
-		this.applicationId=applicationId;
+		this.applicationId = applicationId;
 	}
 
 	public String getApplicationId() {

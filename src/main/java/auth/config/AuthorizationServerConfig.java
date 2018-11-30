@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -73,13 +74,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     @Qualifier("ApplicationDetailsServiceImpl")
     private ClientDetailsService clientDetailsService;
+    
+    @Autowired
+	private AuthenticationManager authenticationManager;
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer configurer) {
         configurer
                 .tokenServices(tokenServices)
                 .tokenStore(tokenStore)
-                .accessTokenConverter(accessTokenConverter);
+                .accessTokenConverter(accessTokenConverter)
+                .authenticationManager(authenticationManager);  
     }
 
     @Override

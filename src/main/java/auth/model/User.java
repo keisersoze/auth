@@ -5,47 +5,29 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Document(collection = "User")
 public class User extends UserInfo{
 
     @Id
+    @NotNull
+    @Size(min=3, max=30)
     private String username;
 
-    private String password;
+    public User(@NotNull @Size(min = 3, max = 30) String username, 
+    		@NotNull @Size(min = 8) String password, List<String> authorities) {
+		super(password, authorities);
+		this.username = username;
+	}
 
-    private List<String> authorities;
-
-
-    public User() {
-    }
-
-    public User(String username, String password, List<String> authorities) {
+	public void setUsername(String username) {
         this.username = username;
-        this.password = password;
-        this.authorities = authorities;
-    }
-
-    public void setAuthorities(List<String> authorities) {
-        this.authorities = authorities;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public List<String> getAuthorities() {
-        return authorities;
-    }
 }

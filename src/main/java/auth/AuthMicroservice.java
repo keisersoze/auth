@@ -1,7 +1,7 @@
 package auth;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,13 +34,20 @@ public class AuthMicroservice implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<String> roles = new ArrayList <String>();
-		roles.add("ROLE_ADMIN");
-		Application app = new Application("admin", passwordEncoder.encode("admin"), roles );
+		
+		//TODO admin is a user and not an app
+		Application app = new Application("admin", passwordEncoder.encode("admin"), new ArrayList <String>(Arrays.asList("ROLE_ADMIN")));
 		try {
         	applicationService.insert(app);
         }catch(ApplicationIDNotValidException e){
         	applicationService.update(app);
+        }
+		
+		Application lynxClient = new Application("lynx_client", passwordEncoder.encode("lynx"), new ArrayList <String>(Arrays.asList("FIRST_PARTY")));
+		try {
+        	applicationService.insert(lynxClient);
+        }catch(ApplicationIDNotValidException e){
+        	applicationService.update(lynxClient);
         }
 	}
 	

@@ -5,11 +5,13 @@ import java.util.List;
 import auth.model.User;
 
 public interface UserService {
-	User loadUserByUsername(String username);
+	User find(String username);
 
     List<User> findAll();
 
-    void put(User user);
+    void insert(User application);
+    
+    void update(User application);
 
-    void deleteByUsername(String username);
+    void delete(String username);
 }
