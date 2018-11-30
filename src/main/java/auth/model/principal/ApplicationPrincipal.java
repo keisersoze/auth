@@ -9,16 +9,16 @@ import java.util.*;
 
 
 public class ApplicationPrincipal implements ClientDetails {
-    private Application clientApplication;
+    private Application application;
 
 
     public ApplicationPrincipal(Application clientApplication) {
-        this.clientApplication = clientApplication;
+        this.application = clientApplication;
     }
 
     @Override
     public String getClientId() {
-        return clientApplication.getApplicationId();
+        return application.getApplicationId();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ApplicationPrincipal implements ClientDetails {
 
     @Override
     public String getClientSecret() {
-        return clientApplication.getSecret();
+        return application.getSecret();
     }
 
     @Override
@@ -48,9 +48,7 @@ public class ApplicationPrincipal implements ClientDetails {
 
     @Override
     public Set<String> getAuthorizedGrantTypes() {
-    	Set<String> set= new HashSet<String>();
-    	set.add("password");
-        return set;
+    	return new HashSet<String>(application.getAuthorizedGrantTypes());
     }
 
     @Override
@@ -61,7 +59,7 @@ public class ApplicationPrincipal implements ClientDetails {
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        clientApplication.getAuthorities()
+        application.getAuthorities()
                 .forEach( authority -> grantedAuthorities.add(new Authority(authority)));
         return grantedAuthorities;
     }

@@ -13,11 +13,13 @@ public class ApplicationInfo {
     
     private List<String> authorities;
     
+    private List<String> authorizedGrantTypes;
+    
 
-	public ApplicationInfo(@NotNull @Size(min = 8) String secret, List<String> authorities) {
-		super();
+	public ApplicationInfo(@NotNull @Size(min = 8) String secret, List<String> authorities, List<String> grantTypes) {
 		this.secret = secret;
 		this.authorities = authorities;
+		this.authorizedGrantTypes = grantTypes;
 	}
 
 	public void setSecret(String clientSecret) {
@@ -35,4 +37,14 @@ public class ApplicationInfo {
     public List<String> getAuthorities() {
         return authorities;
     }
+
+	public List<String> getAuthorizedGrantTypes() {
+		return authorizedGrantTypes;
+	}
+
+	public void setAuthorizedGrantTypes(List<String> authorizedGrantTypes) {
+		this.authorizedGrantTypes = authorizedGrantTypes;
+	}
+    
+    
 }

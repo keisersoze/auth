@@ -34,10 +34,10 @@ public class ApplicationController {
     private ApplicationServiceImpl applicationService;
 
 
-    @PutMapping("/application/{application_id}")
+    @PutMapping("/applications/{application_id}")
     public void putClient(@PathVariable(value="application_id") String id,@RequestBody @Valid ApplicationInfo clientApplication){
         String encPassword = passwordEncoder.encode(clientApplication.getSecret());
-        Application application = new Application(id, encPassword, clientApplication.getAuthorities());
+        Application application = new Application(id, encPassword, clientApplication.getAuthorities(), clientApplication.getAuthorizedGrantTypes());
         try {
         	applicationService.insert(application);
         }catch(ApplicationIDNotValidException e){
@@ -45,30 +45,30 @@ public class ApplicationController {
         }
     }
     
-    @PatchMapping("/application/{application_id}")
+    @PatchMapping("/applications/{application_id}")
     public void patchClient(@PathVariable(value="application_id") String id,@RequestBody @Valid ApplicationInfo clientApplication){
     	String encPassword = passwordEncoder.encode(clientApplication.getSecret());
-        applicationService.update(new Application(id, encPassword, clientApplication.getAuthorities()));
+        applicationService.update(new Application(id, encPassword, clientApplication.getAuthorities(),clientApplication.getAuthorizedGrantTypes()));
     }
     
-    @PostMapping("/application")
+    @PostMapping("/applications")
     public void postClient(@RequestBody @Valid Application clientApplication){
         String encPassword = passwordEncoder.encode(clientApplication.getSecret());
         clientApplication.setSecret(encPassword);
         applicationService.insert(clientApplication);
     }
     
-    @GetMapping("/application/{application_id}")
+    @GetMapping("/applications/{application_id}")
     public Application getClient(@PathVariable(value="application_id") String id){
         return applicationService.find(id);
     }
 
-    @DeleteMapping("/application/{application_id}")
+    @DeleteMapping("/applications/{application_id}")
     public void deleteClient(@PathVariable(value="application_id") String id){
         applicationService.delete(id);
     }
 
-    @GetMapping("/application")
+    @GetMapping("/applications")
     public List<Application> findAllClients(){
         return applicationService.findAll();
     }

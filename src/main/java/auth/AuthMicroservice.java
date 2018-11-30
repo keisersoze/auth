@@ -40,8 +40,8 @@ public class AuthMicroservice implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		
-		
-		Application lynxClient = new Application("lynx_client", passwordEncoder.encode("lynx"), new ArrayList <String>(Arrays.asList("FIRST_PARTY")));
+		Application lynxClient = new Application("lynx_client", passwordEncoder.encode("lynx"), 
+				new ArrayList <String>(Arrays.asList("FIRST_PARTY")), new ArrayList <String>(Arrays.asList("password")));
 		try {
         	applicationService.insert(lynxClient);
         }catch(ApplicationIDNotValidException e){
