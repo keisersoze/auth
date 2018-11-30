@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import auth.exception.ResourceNotFoundException;
 import auth.model.Application;
-import auth.model.principal.ApplicationPrincipal;
+import auth.model.security.ApplicationPrincipal;
 import auth.repository.ApplicationRepository;
 
 @Service

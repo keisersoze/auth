@@ -1,4 +1,4 @@
-package auth.model.principal;
+package auth.model.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class UserPrincipal implements UserDetails {
 	
     private User user;

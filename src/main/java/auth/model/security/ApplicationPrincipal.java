@@ -1,4 +1,4 @@
-package auth.model.principal;
+package auth.model.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -8,6 +8,7 @@ import auth.model.Application;
 import java.util.*;
 
 
+@SuppressWarnings("serial")
 public class ApplicationPrincipal implements ClientDetails {
     private Application application;
 

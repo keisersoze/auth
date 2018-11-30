@@ -1,7 +1,8 @@
-package auth.model.principal;
+package auth.model.security;
 
 import org.springframework.security.core.GrantedAuthority;
 
+@SuppressWarnings("serial")
 public class Authority implements GrantedAuthority {
 	
     private String authority;
