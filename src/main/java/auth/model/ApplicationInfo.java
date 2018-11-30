@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ApplicationInfo {
 	
 	@NotNull
@@ -13,6 +15,7 @@ public class ApplicationInfo {
     
     private List<String> authorities;
     
+    @JsonProperty("authorized_grant_types")
     private List<String> authorizedGrantTypes;
     
 

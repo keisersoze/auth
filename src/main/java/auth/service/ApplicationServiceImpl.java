@@ -1,21 +1,31 @@
 package auth.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import auth.exception.ResourceNotFoundException;
 import auth.exception.ApplicationIDNotValidException;
+import auth.exception.NotValidGrantType;
+import auth.exception.ResourceNotFoundException;
 import auth.model.Application;
 import auth.repository.ApplicationRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
 
     @Autowired
     private ApplicationRepository clientRepository;
+    
+    private static String clientCredentials = "client_credentials";
+    private static String password = "password";
+    
+    Optional<String> findAnyNotValid(List<String> grantTypes) {
+    	return grantTypes.stream()
+    			.filter(grantType -> !grantType.equals(clientCredentials) && !grantType.equals(password)).findAny();
+    }
 
     public Application find(String id){
         if (clientRepository.existsByApplicationId(id)) {
@@ -32,17 +42,25 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     public void insert(Application clientApplication){
-    	if (!clientRepository.existsByApplicationId(clientApplication.getApplicationId()))
-    		clientRepository.insert(clientApplication);
+    	Optional<String> notValidGrantType =  findAnyNotValid(clientApplication.getAuthorizedGrantTypes());
+    	if (!(notValidGrantType.isPresent()))
+	    	if (!clientRepository.existsByApplicationId(clientApplication.getApplicationId()))
+	    		clientRepository.insert(clientApplication);
+	    	else
+	    		throw new ApplicationIDNotValidException();
     	else
-    		throw new ApplicationIDNotValidException();
+    		throw new NotValidGrantType(notValidGrantType.get());
     }
     
     public void update(Application clientApplication){
-    	if (clientRepository.existsByApplicationId(clientApplication.getApplicationId()))
-    		clientRepository.save(clientApplication);
+    	Optional<String> notValidGrantType =  findAnyNotValid(clientApplication.getAuthorizedGrantTypes());
+    	if (!(notValidGrantType.isPresent()))
+	    	if (clientRepository.existsByApplicationId(clientApplication.getApplicationId()))
+	    		clientRepository.save(clientApplication);
+	    	else
+	    		throw new ResourceNotFoundException();
     	else
-    		throw new ResourceNotFoundException();
+    		throw new NotValidGrantType(notValidGrantType.get());
     }
 
     public void delete(String clientId){

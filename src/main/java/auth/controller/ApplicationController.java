@@ -32,8 +32,7 @@ public class ApplicationController {
 
     @Autowired
     private ApplicationServiceImpl applicationService;
-
-
+    
     @PutMapping("/applications/{application_id}")
     public void putClient(@PathVariable(value="application_id") String id,@RequestBody @Valid ApplicationInfo clientApplication){
         String encPassword = passwordEncoder.encode(clientApplication.getSecret());

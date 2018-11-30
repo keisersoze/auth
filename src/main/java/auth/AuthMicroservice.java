@@ -54,6 +54,7 @@ public class AuthMicroservice implements CommandLineRunner {
         }catch(ApplicationIDNotValidException e){
         	userService.update(adminUser);
         }
+        
 	}
 	
 }
