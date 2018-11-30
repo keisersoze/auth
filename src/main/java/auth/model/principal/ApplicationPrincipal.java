@@ -49,7 +49,7 @@ public class ApplicationPrincipal implements ClientDetails {
     @Override
     public Set<String> getAuthorizedGrantTypes() {
     	Set<String> set= new HashSet<String>();
-    	set.add("client_credentials");
+    	set.add("password");
         return set;
     }
 
