@@ -46,7 +46,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>auth.AuthMicroservice</mainClass>
+					<mainClass>com.lynx.auth.AuthMicroservice</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
