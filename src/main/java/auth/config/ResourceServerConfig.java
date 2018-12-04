@@ -32,7 +32,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter  {
 	@Override
     public void configure(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests().antMatchers("/application/**").hasRole("ADMIN")
+            .authorizeRequests().antMatchers("/applications/**").hasRole("ADMIN")
             .and()
             .authorizeRequests().antMatchers("/users/**").hasRole("ADMIN");
         
