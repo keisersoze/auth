@@ -11,6 +11,7 @@ public class UserInfo {
     @Size(min=8)
     private String password;
 
+	@NotNull
     private List<String> authorities;
 
     public UserInfo(@NotNull @Size(min = 8) String password, List<String> authorities) {

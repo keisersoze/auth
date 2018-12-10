@@ -41,7 +41,8 @@ public class AuthMicroservice implements CommandLineRunner {
 		
 		
 		Application lynxClient = new Application("lynx_client", passwordEncoder.encode("lynx"), 
-				new ArrayList <String>(Arrays.asList("FIRST_PARTY")), new ArrayList <String>(Arrays.asList("password")));
+				new ArrayList <String>(Arrays.asList("FIRST_PARTY")), new ArrayList <String>(Arrays.asList("password"))
+				,0,0);
 		try {
         	applicationService.insert(lynxClient);
         }catch(ApplicationIDNotValidException e){

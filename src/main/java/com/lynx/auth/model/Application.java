@@ -20,8 +20,9 @@ public class Application extends ApplicationInfo {
     private String applicationId;
 
 	public Application(@NotNull @Size(min = 3, max = 30) String applicationId,
-			@NotNull @Size(min = 8) String secret, List<String> authorities, List<String> authorizedGrantTypes) {
-		super(secret, authorities, authorizedGrantTypes);
+			@NotNull @Size(min = 8) String secret, List<String> authorities, List<String> authorizedGrantTypes,
+			int nRequests, long refreshInterval) {
+		super(secret, authorities, authorizedGrantTypes, nRequests, refreshInterval);
 		this.applicationId = applicationId;
 	}
 
