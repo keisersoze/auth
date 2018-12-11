@@ -13,8 +13,10 @@ public class ApplicationInfo {
     @Size(min=8)
     private String secret;
     
+	@NotNull
     private List<String> authorities;
     
+	@NotNull
     @JsonProperty("authorized_grant_types")
     private List<String> authorizedGrantTypes;
     
