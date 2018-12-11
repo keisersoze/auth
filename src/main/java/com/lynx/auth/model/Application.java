@@ -20,7 +20,7 @@ public class Application extends ApplicationInfo {
     private String applicationId;
 
 	public Application(String applicationId, String secret, List<String> authorities, List<String> authorizedGrantTypes,
-			int numRequests, long refreshInterval) {
+			Integer numRequests, Long refreshInterval) {
 		super(secret, authorities, authorizedGrantTypes, numRequests, refreshInterval);
 		this.applicationId = applicationId;
 	}
