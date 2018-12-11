@@ -30,8 +30,8 @@ public class ApplicationInfo {
 	@JsonProperty("refresh_interval")
     private long refreshInterval;
 	
-	public ApplicationInfo(@NotNull @Size(min = 8) String secret, @NotNull List<String> authorities,  @NotNull List<String> grantTypes,
-			@NotNull int numRequests, @NotNull long refreshInterval) {
+	public ApplicationInfo(String secret, List<String> authorities, List<String> grantTypes,
+			int numRequests, long refreshInterval) {
 		this.secret = secret;
 		this.authorities = authorities;
 		this.authorizedGrantTypes = grantTypes;

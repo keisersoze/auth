@@ -19,9 +19,8 @@ public class Application extends ApplicationInfo {
     @JsonProperty("application_id")
     private String applicationId;
 
-	public Application(@NotNull @Size(min = 3, max = 30) String applicationId,
-			@NotNull @Size(min = 8) String secret, @NotNull List<String> authorities, @NotNull List<String> authorizedGrantTypes,
-			@NotNull int numRequests, @NotNull long refreshInterval) {
+	public Application(String applicationId, String secret, List<String> authorities, List<String> authorizedGrantTypes,
+			int numRequests, long refreshInterval) {
 		super(secret, authorities, authorizedGrantTypes, numRequests, refreshInterval);
 		this.applicationId = applicationId;
 	}
