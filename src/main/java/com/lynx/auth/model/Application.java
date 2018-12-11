@@ -20,8 +20,9 @@ public class Application extends ApplicationInfo {
     private String applicationId;
 
 	public Application(@NotNull @Size(min = 3, max = 30) String applicationId,
-			@NotNull @Size(min = 8) String secret, List<String> authorities, List<String> authorizedGrantTypes) {
-		super(secret, authorities, authorizedGrantTypes);
+			@NotNull @Size(min = 8) String secret, @NotNull List<String> authorities, @NotNull List<String> authorizedGrantTypes,
+			@NotNull int numRequests, @NotNull long refreshInterval) {
+		super(secret, authorities, authorizedGrantTypes, numRequests, refreshInterval);
 		this.applicationId = applicationId;
 	}
 
@@ -32,6 +33,6 @@ public class Application extends ApplicationInfo {
     public void setApplicationId(String clientApplicationId) {
         this.applicationId = clientApplicationId;
     }
-    
+
 }
 
