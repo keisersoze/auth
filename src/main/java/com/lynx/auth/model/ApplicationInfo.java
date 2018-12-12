@@ -19,19 +19,19 @@ public class ApplicationInfo {
 	@NotNull
     @JsonProperty("authorized_grant_types")
     private List<String> authorizedGrantTypes;
-    
-    //request number limit per refresh interval window
+	
+	//request number limit per refresh interval window
 	@NotNull
 	@JsonProperty("num_requests")
-    private int numRequests;
+	private Integer numRequests;
     
-    //interval of time (in seconds)
+	//interval of time (in seconds)
 	@NotNull
 	@JsonProperty("refresh_interval")
-    private long refreshInterval;
-
-	public ApplicationInfo(@NotNull @Size(min = 8) String secret, List<String> authorities, List<String> grantTypes,
-			int numRequests, long refreshInterval) {
+    private Long refreshInterval;
+	
+	public ApplicationInfo(String secret, List<String> authorities, List<String> grantTypes,
+			Integer numRequests, Long refreshInterval) {
 		this.secret = secret;
 		this.authorities = authorities;
 		this.authorizedGrantTypes = grantTypes;
@@ -63,22 +63,20 @@ public class ApplicationInfo {
 		this.authorizedGrantTypes = authorizedGrantTypes;
 	}
 
-
-	public int getNumRequests() {
+	public Integer getNumRequests() {
 		return numRequests;
 	}
 
-	public void setNumRequests(int numRequests) {
+	public void setNumRequests(Integer numRequests) {
 		this.numRequests = numRequests;
 	}
 
-	public long getRefreshInterval() {
+	public Long getRefreshInterval() {
 		return refreshInterval;
 	}
 
-	public void setRefreshInterval(long refreshInterval) {
+	public void setRefreshInterval(Long refreshInterval) {
 		this.refreshInterval = refreshInterval;
 	}
-
 	
 }

@@ -1,8 +1,11 @@
 package com.lynx.auth.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -19,10 +22,17 @@ public class Application extends ApplicationInfo {
     @JsonProperty("application_id")
     private String applicationId;
 
-	public Application(@NotNull @Size(min = 3, max = 30) String applicationId,
-			@NotNull @Size(min = 8) String secret, List<String> authorities, List<String> authorizedGrantTypes,
-			int nRequests, long refreshInterval) {
-		super(secret, authorities, authorizedGrantTypes, nRequests, refreshInterval);
+    @JsonCreator
+    @PersistenceConstructor
+	public Application(String applicationId, String secret, List<String> authorities, List<String> authorizedGrantTypes,
+			Integer numRequests, Long refreshInterval) {
+		super(secret, authorities, authorizedGrantTypes, numRequests, refreshInterval);
+		this.applicationId = applicationId;
+	}
+	
+	public Application (String applicationId, ApplicationInfo appInfo) {
+		super(appInfo.getSecret(),appInfo.getAuthorities(),appInfo.getAuthorizedGrantTypes(),
+				appInfo.getNumRequests(),appInfo.getRefreshInterval());
 		this.applicationId = applicationId;
 	}
 
@@ -33,6 +43,6 @@ public class Application extends ApplicationInfo {
     public void setApplicationId(String clientApplicationId) {
         this.applicationId = clientApplicationId;
     }
-    
+
 }
 
