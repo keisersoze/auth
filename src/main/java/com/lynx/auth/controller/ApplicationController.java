@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lynx.auth.exception.ApplicationIDNotValidException;
+import com.lynx.auth.exception.ResourceNotFoundException;
 import com.lynx.auth.model.Application;
 import com.lynx.auth.model.ApplicationInfo;
 import com.lynx.auth.repository.ApplicationRepository;
@@ -38,33 +40,39 @@ public class ApplicationController {
         applicationService.upsert(application);
     }
     
-    /*
-    @PatchMapping("/applications/{application_id}")
-    public void patchClient(@PathVariable(value="application_id") String id,@RequestBody @Valid ApplicationInfo appInfo){
-        appInfo.setSecret(passwordEncoder.encode(appInfo.getSecret()));
-        applicationService.update(new Application(id, appInfo));
-    }*/
-    
     @PostMapping("/applications")
     public void postClient(@RequestBody @Valid Application app){
         String encPassword = passwordEncoder.encode(app.getSecret());
         app.setSecret(encPassword);
-        applicationService.insert(app);
+        if (!applicationService.insert(app))
+        	throw new ApplicationIDNotValidException();
     }
     
     @GetMapping("/applications/{application_id}")
     public Application getClient(@PathVariable(value="application_id") String id){
-        return applicationService.find(id);
+    	Application app = applicationService.find(id);
+    	if (app != null )
+    		return app ;
+    	else
+    		throw new ResourceNotFoundException();
     }
 
     @DeleteMapping("/applications/{application_id}")
     public void deleteClient(@PathVariable(value="application_id") String id){
-        applicationService.delete(id);
+        if(!applicationService.delete(id))
+        	throw new ResourceNotFoundException();
     }
 
     @GetMapping("/applications")
     public List<Application> findAllClients(){
         return applicationService.findAll();
     }
+    
+    /*
+    @PatchMapping("/applications/{application_id}")
+    public void patchClient(@PathVariable(value="application_id") String id,@RequestBody @Valid ApplicationInfo appInfo){
+        appInfo.setSecret(passwordEncoder.encode(appInfo.getSecret()));
+        applicationService.update(new Application(id, appInfo));
+    }*/
     
 }
