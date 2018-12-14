@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @SuppressWarnings("serial")
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ApplicationIDNotValidException extends RuntimeException {
+public class ApplicationIdNotValidException extends RuntimeException {
 
-    public ApplicationIDNotValidException() {
+    public ApplicationIdNotValidException() {
         super();
     }
 

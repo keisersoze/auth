@@ -1,6 +1,7 @@
 package com.lynx.auth.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lynx.auth.exception.ApplicationIDNotValidException;
+import com.lynx.auth.exception.ApplicationIdNotValidException;
+import com.lynx.auth.exception.NotValidGrantType;
 import com.lynx.auth.exception.ResourceNotFoundException;
 import com.lynx.auth.model.Application;
 import com.lynx.auth.model.ApplicationInfo;
@@ -33,19 +35,37 @@ public class ApplicationController {
     @Autowired
     private ApplicationRepository applicationService;
     
+    private static String clientCredentials = "client_credentials";
+    private static String password = "password";
+    
+    Optional<String> findAnyNotValid(List<String> grantTypes) {
+    	return grantTypes.stream()
+    			.filter(grantType -> !grantType.equals(clientCredentials) && !grantType.equals(password)).findAny();
+    }
+    
     @PutMapping("/applications/{application_id}")
     public void putClient(@PathVariable(value="application_id") String id,@RequestBody @Valid ApplicationInfo appInfo){
-        appInfo.setSecret(passwordEncoder.encode(appInfo.getSecret()));
-        Application application = new Application(id, appInfo);
-        applicationService.upsert(application);
+    	Optional<String> notValidGrantType =  findAnyNotValid(appInfo.getAuthorizedGrantTypes());
+    	if (!(notValidGrantType.isPresent())) {
+	        appInfo.setSecret(passwordEncoder.encode(appInfo.getSecret()));
+	        Application application = new Application(id, appInfo);
+	        applicationService.upsert(application);
+    	}else {
+    		throw new NotValidGrantType(notValidGrantType.get());
+    	}
     }
     
     @PostMapping("/applications")
     public void postClient(@RequestBody @Valid Application app){
-        String encPassword = passwordEncoder.encode(app.getSecret());
-        app.setSecret(encPassword);
-        if (!applicationService.insert(app))
-        	throw new ApplicationIDNotValidException();
+    	Optional<String> notValidGrantType =  findAnyNotValid(app.getAuthorizedGrantTypes());
+    	if (!(notValidGrantType.isPresent())) {
+	        String encPassword = passwordEncoder.encode(app.getSecret());
+	        app.setSecret(encPassword);
+	        if (!applicationService.insert(app))
+	        	throw new ApplicationIdNotValidException();
+    	}else {
+    		throw new NotValidGrantType(notValidGrantType.get());
+    	}
     }
     
     @GetMapping("/applications/{application_id}")
