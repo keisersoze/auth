@@ -33,7 +33,7 @@ public class ApplicationController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private ApplicationRepository applicationService;
+    private ApplicationRepository applicationRepo;
     
     private static String clientCredentials = "client_credentials";
     private static String password = "password";
@@ -49,7 +49,7 @@ public class ApplicationController {
     	if (!(notValidGrantType.isPresent())) {
 	        appInfo.setSecret(passwordEncoder.encode(appInfo.getSecret()));
 	        Application application = new Application(id, appInfo);
-	        applicationService.upsert(application);
+	        applicationRepo.upsert(application);
     	}else {
     		throw new NotValidGrantType(notValidGrantType.get());
     	}
@@ -61,7 +61,7 @@ public class ApplicationController {
     	if (!(notValidGrantType.isPresent())) {
 	        String encPassword = passwordEncoder.encode(app.getSecret());
 	        app.setSecret(encPassword);
-	        if (!applicationService.insert(app))
+	        if (!applicationRepo.insert(app))
 	        	throw new ApplicationIdNotValidException();
     	}else {
     		throw new NotValidGrantType(notValidGrantType.get());
@@ -70,7 +70,7 @@ public class ApplicationController {
     
     @GetMapping("/applications/{application_id}")
     public Application getClient(@PathVariable(value="application_id") String id){
-    	Application app = applicationService.find(id);
+    	Application app = applicationRepo.find(id);
     	if (app != null )
     		return app ;
     	else
@@ -79,13 +79,13 @@ public class ApplicationController {
 
     @DeleteMapping("/applications/{application_id}")
     public void deleteClient(@PathVariable(value="application_id") String id){
-        if(!applicationService.delete(id))
+        if(!applicationRepo.delete(id))
         	throw new ResourceNotFoundException();
     }
 
     @GetMapping("/applications")
     public List<Application> findAllClients(){
-        return applicationService.findAll();
+        return applicationRepo.findAll();
     }
     
     /*

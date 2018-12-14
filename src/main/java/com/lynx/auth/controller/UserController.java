@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lynx.auth.exception.ApplicationIdNotValidException;
+import com.lynx.auth.exception.ResourceNotFoundException;
 import com.lynx.auth.model.User;
 import com.lynx.auth.model.UserInfo;
 import com.lynx.auth.repository.UserRepository;
@@ -38,14 +40,42 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserRepository userService;
+    private UserRepository userRepo;
     
     @PutMapping("/users/{username}")
     public void putUser(@PathVariable(value="username") String username,
     		@RequestBody @Valid UserInfo userInfo){
         String encPassword = passwordEncoder.encode(userInfo.getPassword());
         User user = new User(username, encPassword, userInfo.getAuthorities());
-        userService.upsert(user);
+        userRepo.upsert(user);
+    }
+    
+    @PostMapping("/users")
+    public void postUser(@RequestBody @Valid User user){
+        String encPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encPassword);
+        if (!userRepo.insert(user))
+        	throw new ApplicationIdNotValidException();
+    }
+    
+    @GetMapping("/users/{username}")
+    public User getUser(@PathVariable(value="username") String username){
+    	User user = userRepo.find(username);
+    	if (user != null )
+    		return user ;
+    	else
+    		throw new ResourceNotFoundException();
+    }
+
+    @DeleteMapping("/users/{username}")
+    public void deleteUser(@PathVariable(value="username") String username){
+    	if (!userRepo.delete(username))
+    		throw new ResourceNotFoundException();
+    }
+
+    @GetMapping("/users")
+    public List<User> findAllUsers(){
+        return userRepo.findAll();
     }
     
     /*
@@ -55,27 +85,4 @@ public class UserController {
     	String encPassword = passwordEncoder.encode(userInfo.getPassword());
     	userService.update(new User(username, encPassword, userInfo.getAuthorities()));
     }*/
-    
-    @PostMapping("/users")
-    public void postUser(@RequestBody @Valid User user){
-        String encPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encPassword);
-        userService.insert(user);
-    }
-    
-    @GetMapping("/users/{username}")
-    public User getUser(@PathVariable(value="username") String username){
-        return userService.find(username);
-    }
-
-    @DeleteMapping("/users/{username}")
-    public void deleteUser(@PathVariable(value="username") String username){
-    	userService.delete(username);
-    }
-
-    @GetMapping("/users")
-    public List<User> findAllUsers(){
-        return userService.findAll();
-    }
-    
 }
