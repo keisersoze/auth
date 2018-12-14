@@ -27,13 +27,13 @@ public class ApplicationRepository {
     }
 
     public boolean insert(Application app){
-    	boolean acknowledged = true;
+    	boolean performed = true;
     	try {
     		mongoTemplate.insert(app);       
 	    } catch ( DataAccessException e) {
-	    	acknowledged = false;
+	    	performed = false;
 	    }
-    	return acknowledged;
+    	return performed;
     }
     
     public void upsert(Application clientApplication){
@@ -44,7 +44,7 @@ public class ApplicationRepository {
     	Query query = new Query();
     	query.addCriteria(Criteria.where("_id").is(id));
     	DeleteResult res = mongoTemplate.remove(query, Application.class);
-    	return res.wasAcknowledged();
+    	return res.getDeletedCount()==1;
     }
     
     /*

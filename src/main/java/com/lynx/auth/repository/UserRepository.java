@@ -44,6 +44,6 @@ public class UserRepository {
     	Query query = new Query();
     	query.addCriteria(Criteria.where("_id").is(id));
     	DeleteResult res = mongoTemplate.remove(query, User.class);
-    	return res.wasAcknowledged();
+    	return res.getDeletedCount()==1;
     }
 }
