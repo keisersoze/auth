@@ -6,14 +6,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @SuppressWarnings("serial")
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class UsernameNotValidException extends RuntimeException  {
+	private String username;
 	
-	public UsernameNotValidException() {
+	public UsernameNotValidException(String username) {
         super();
+        this.username=username;
     }
 
     @Override
     public String getMessage() {
-        return String.format("The application_id is not vaild");
+        return String.format(username + " is not a vaild username");
     }
     
 }
