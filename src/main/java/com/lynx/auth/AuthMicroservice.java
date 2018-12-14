@@ -11,11 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.lynx.auth.exception.ApplicationIDNotValidException;
 import com.lynx.auth.model.Application;
 import com.lynx.auth.model.User;
-import com.lynx.auth.service.ApplicationServiceImpl;
-import com.lynx.auth.service.UserServiceImpl;
+import com.lynx.auth.repository.ApplicationRepository;
+import com.lynx.auth.repository.UserRepository;
 
 
 @SpringBootApplication
@@ -31,10 +30,10 @@ public class AuthMicroservice implements CommandLineRunner {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private ApplicationServiceImpl applicationService;
+    private ApplicationRepository applicationService;
     
     @Autowired
-    private UserServiceImpl userService;
+    private UserRepository userService;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -43,20 +42,11 @@ public class AuthMicroservice implements CommandLineRunner {
 		Application lynxClient = new Application("lynx_client", passwordEncoder.encode("lynx"), 
 				new ArrayList <String>(Arrays.asList("FIRST_PARTY")), new ArrayList <String>(Arrays.asList("password")),
 				new Integer(0),new Long(2));
-		try {
-        	applicationService.insert(lynxClient);
-        }catch(ApplicationIDNotValidException e){
-        	applicationService.update(lynxClient);
-        }
+		applicationService.upsert(lynxClient);
 		
 		User adminUser = new User("admin_user", passwordEncoder.encode("admin_user"), new ArrayList <String>(Arrays.asList("ROLE_ADMIN")));
-		try {
-			userService.insert(adminUser);
-        }catch(ApplicationIDNotValidException e){
-        	userService.update(adminUser);
-        }
+		userService.upsert(adminUser);
         
 	}
-	
 }
 

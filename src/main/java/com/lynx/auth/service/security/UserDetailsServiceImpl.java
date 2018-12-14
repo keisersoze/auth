@@ -11,7 +11,6 @@ import com.lynx.auth.model.User;
 import com.lynx.auth.model.security.UserPrincipal;
 import com.lynx.auth.repository.UserRepository;
 
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -20,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.find(username);
         if (user == null) {
             throw new ResourceNotFoundException();
         }

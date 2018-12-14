@@ -21,7 +21,7 @@ public class ApplicationDetailsServiceImpl implements ClientDetailsService {
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) {
-        Application client = clientRepository.findByApplicationId(clientId);
+        Application client = clientRepository.find(clientId);
         if (client == null) {
             throw new ResourceNotFoundException();
         }
