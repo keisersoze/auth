@@ -3,6 +3,7 @@ package com.lynx.auth.repository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -12,7 +13,7 @@ import com.lynx.auth.model.Application;
 import com.mongodb.client.result.DeleteResult;
 
 @Repository
-public class ApplicationRepository  {
+public class ApplicationRepository {
 	
 	@Autowired 
 	private MongoTemplate mongoTemplate;
@@ -26,8 +27,13 @@ public class ApplicationRepository  {
     }
 
     public boolean insert(Application app){
-    	return mongoTemplate.insert(app) != null;
-    	
+    	boolean acknowledged = true;
+    	try {
+    		mongoTemplate.insert(app);       
+	    } catch ( DataAccessException e) {
+	    	acknowledged = false;
+	    }
+    	return acknowledged;
     }
     
     public void upsert(Application clientApplication){
