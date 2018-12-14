@@ -40,8 +40,7 @@ public class AuthMicroservice implements CommandLineRunner {
 		
 		
 		Application lynxClient = new Application("lynx_client", passwordEncoder.encode("lynx"), 
-				new ArrayList <String>(Arrays.asList("FIRST_PARTY")), new ArrayList <String>(Arrays.asList("password")),
-				new Integer(0),new Long(2));
+				new ArrayList <String>(Arrays.asList("FIRST_PARTY")), new ArrayList <String>(Arrays.asList("password")));
 		applicationService.upsert(lynxClient);
 		
 		User adminUser = new User("admin_user", passwordEncoder.encode("admin_user"), new ArrayList <String>(Arrays.asList("ROLE_ADMIN")));

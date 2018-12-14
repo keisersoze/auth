@@ -23,15 +23,13 @@ public class Application extends ApplicationInfo {
 
     @JsonCreator
     @PersistenceConstructor
-	public Application(String applicationId, String secret, List<String> authorities, List<String> authorizedGrantTypes,
-			Integer numRequests, Long refreshInterval) {
-		super(secret, authorities, authorizedGrantTypes, numRequests, refreshInterval);
+	public Application(String applicationId, String secret, List<String> authorities, List<String> authorizedGrantTypes) {
+		super(secret, authorities, authorizedGrantTypes);
 		this.applicationId = applicationId;
 	}
 	
 	public Application (String applicationId, ApplicationInfo appInfo) {
-		super(appInfo.getSecret(),appInfo.getAuthorities(),appInfo.getAuthorizedGrantTypes(),
-				appInfo.getNumRequests(),appInfo.getRefreshInterval());
+		super(appInfo.getSecret(),appInfo.getAuthorities(),appInfo.getAuthorizedGrantTypes());
 		this.applicationId = applicationId;
 	}
 
