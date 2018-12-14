@@ -62,7 +62,7 @@ public class ApplicationController {
 	        String encPassword = passwordEncoder.encode(app.getSecret());
 	        app.setSecret(encPassword);
 	        if (!applicationRepo.insert(app))
-	        	throw new ApplicationIdNotValidException();
+	        	throw new ApplicationIdNotValidException(app.getApplicationId());
     	}else {
     		throw new NotValidGrantType(notValidGrantType.get());
     	}

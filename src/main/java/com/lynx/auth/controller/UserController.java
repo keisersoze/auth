@@ -55,7 +55,7 @@ public class UserController {
         String encPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encPassword);
         if (!userRepo.insert(user))
-        	throw new ApplicationIdNotValidException();
+        	throw new ApplicationIdNotValidException(user.getUsername());
     }
     
     @GetMapping("/users/{username}")

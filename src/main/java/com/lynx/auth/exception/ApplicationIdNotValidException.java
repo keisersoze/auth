@@ -6,13 +6,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @SuppressWarnings("serial")
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ApplicationIdNotValidException extends RuntimeException {
+	private final String applicationId;
 
-    public ApplicationIdNotValidException() {
+    public ApplicationIdNotValidException(String applicationId) {
         super();
+        this.applicationId = applicationId; 
     }
 
     @Override
     public String getMessage() {
-        return String.format("The application_id is not vaild");
+        return String.format(applicationId + " is not vaild application_id");
     }
 }
